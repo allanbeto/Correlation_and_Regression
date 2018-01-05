@@ -1,0 +1,57 @@
+---
+title: "Correlation & Regression"
+author: "AAA"
+date: "5 de enero de 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Course Description
+
+Ultimately, data analysis is about understanding relationships among variables. Exploring data with multiple variables requires new, more complex tools, but enables a richer set of comparisons. In this course, you will learn how to describe relationships between two numerical quantities. You will characterize these relationships graphically, in the form of summary statistics, and through simple linear regression models.
+
+
+## Visualizing two variables
+
+In this chapter, you will learn techniques for exploring bivariate relationships.
+
+```{r}
+
+```
+
+## Correlation
+
+This chapter introduces correlation as a means of quantifying bivariate relationships.
+
+```{r}
+
+```
+
+## Simple linear regression
+
+With the notion of correlation under your belt, we'll now turn our attention to simple linear models in this chapter.
+
+```{r}
+
+```
+
+## Interpreting regression models
+
+This chapter looks at how to interpret the coefficients in a regression model.
+
+```{r}
+
+```
+
+## Model Fit
+
+In this final chapter, you'll learn how to assess the "fit" of a simple linear regression model.
+
+```{r}
+
+```
+
