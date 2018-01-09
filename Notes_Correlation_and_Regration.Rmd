@@ -313,17 +313,122 @@ filter(abs(spurious_cor) > 0.2)
 
 ```
 
-
-
-
-
 ## Simple linear regression
 
 With the notion of correlation under your belt, we'll now turn our attention to simple linear models in this chapter.
 
+### The "best fit" line
+
+The simple linear regression model for a numeric response as a function of a numeric explanatory variable can be visualized on the corresponding scatterplot by a straight line. This is a "best fit" line that cuts through the data in a way that minimizes the distance between the line and the data points.
+
+We might consider linear regression to be a specific example of a larger class of smooth models. The geom_smooth() function allows you to draw such models over a scatterplot of the data itself. This technique is known as visualizing the model in the data space. The method argument to geom_smooth() allows you to specify what class of smooth model you want to see. Since we are exploring linear models, we'll set this argument to the value "lm".
+
+Note that geom_smooth() also takes an se argument that controls the standard error, which we will ignore for now.
+
+### INSTRUCTIONS
+
+Create a scatterplot of body weight as a function of height for all individuals in the bdims dataset with a simple linear model plotted over the data.
+
+```{r}
+# Scatterplot with regression line
+ggplot(data = bdims, aes(x =hgt, y = wgt)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+### Uniqueness of least squares regression line
+
+The least squares criterion implies that the slope of the regression line is unique. In practice, the slope is computed by R. In this exercise, you will experiment with trying to find the optimal value for the regression slope for weight as a function of height in the bdims dataset via trial-and-error.
+
+To help, we've built a custom function for you called add_line(), which takes a single argument: the proposed slope coefficient.
+
+### INSTRUCTIONS
+
+The bdims dataset is available in your workspace. Experiment with different values (to the nearest integer) of the my_slope parameter until you find one that you think fits best.
+
+
 ```{r}
 
+#pre-code
+
+add_line <- function (my_slope) {
+
+bdims_summary <- bdims %>%
+                 summarize(N = n(), r = cor(hgt, wgt),
+                    mean_hgt = mean(hgt), mean_wgt = mean(wgt),
+                    sd_hgt = sd(hgt), sd_wgt = sd(wgt)) %>%
+                 mutate(true_slope = r * sd_wgt / sd_hgt, 
+                    true_intercept = mean_wgt - true_slope * mean_hgt)
+
+p <- ggplot(data = bdims, aes(x = hgt, y = wgt)) + 
+            geom_point() + 
+            geom_point(data = bdims_summary, 
+            aes(x = mean_hgt, y = mean_wgt), 
+            color = "red", size = 3)
+
+my_data <- bdims_summary %>%
+           mutate(my_slope = my_slope, 
+              my_intercept = mean_wgt - my_slope * mean_hgt)
+              p + geom_abline(data = my_data, 
+              aes(intercept = my_intercept, slope = my_slope), color = "dodgerblue")
+}
+
+ggplot(data = bdims, aes(x = hgt, y = wgt)) + 
+geom_point()
+
+# Estimate optimal value of my_slope
+add_line(my_slope = 1)
+
+
+
+
 ```
+
+### Fitting a linear model "by hand"
+
+Recall the simple linear regression model:
+Y=b0+b1⋅X
+Y=b0+b1⋅X
+Two facts enable you to compute the slope b1b1 and intercept b0b0 of a simple linear regression model from some basic summary statistics.
+
+First, the slope can be defined as:
+
+b1=rX,Y⋅sYsX
+b1=rX,Y⋅sYsX
+where rX,YrX,Y represents the correlation (cor()) of XX and YY and sXsX and sYsY represent the standard deviation (sd()) of XX and YY, respectively.
+
+Second, the point (x¯,y¯)(x¯,y¯) is always on the least squares regression line, where x¯x¯ and y¯y¯ denote the average of xx and yy, respectively.
+
+The bdims_summary data frame contains all of the information you need to compute the slope and intercept of the least squares regression line for body weight (YY) as a function of height (XX). You might need to do some algebra to solve for b0b0!
+
+###  INSTRUCTIONS
+
+Print the bdims_summary data frame.
+Use mutate() to add the slope and intercept to the bdims_summary data frame.
+
+```{r}
+
+#pre_exercise
+bdims_summary <- bdims %>%
+                 summarize(N = n(), r = cor(hgt, wgt),
+                    mean_hgt = mean(hgt), mean_wgt = mean(wgt),
+                    sd_hgt = sd(hgt), sd_wgt = sd(wgt))
+
+
+# Print bdims_summary
+bdims_summary
+
+# Add slope and intercept
+bdims_summary %>%
+  mutate(slope = r*sd_wgt/sd_hgt, 
+         intercept = mean_wgt-(slope)*mean_hgt)
+```
+
+
+
+
+
+
 
 ## Interpreting regression models
 
