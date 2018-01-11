@@ -657,7 +657,7 @@ mean(residuals(mod))
 sqrt(sum(residuals(mod)^2) / df.residual(mod))
 ```
 
-Assessing simple linear model fit
+### Assessing simple linear model fit
 
 Recall that the coefficient of determination (R2R2), can be computed as
 R2=1−SSESST=1−Var(e)Var(y),
