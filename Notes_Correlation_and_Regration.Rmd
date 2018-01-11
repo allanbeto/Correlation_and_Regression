@@ -599,18 +599,90 @@ ben
 predict(mod, newdata = ben)
 ```
 
+### Adding a regression line to a plot manually
+
+The geom_smooth() function makes it easy to add a simple linear regression line to a scatterplot of the corresponding variables. And in fact, there are more complicated regression models that can be visualized in the data space with geom_smooth(). However, there may still be times when we will want to add regression lines to our scatterplot manually. To do this, we will use the geom_abline() function, which takes slope and intercept arguments. Naturally, we have to compute those values ahead of time, but we already saw how to do this (e.g. using coef()).
+
+The coefs data frame contains the model estimates retrieved from coef(). Passing this to geom_abline() as the data argument will enable you to draw a straight line on your scatterplot.
+
+### INSTRUCTIONS
+
+Use geom_abline() to add a line defined in the coefs data frame to a scatterplot of weight vs. height for individuals in the bdims dataset.
+
 ```{r}
 
+coefs <- coef(mod) %>%
+t() %>%
+as.data.frame()
+
+
+# Add the line to the scatterplot
+ggplot(data = bdims, aes(x = hgt, y = wgt)) + 
+  geom_point() + 
+  geom_abline(data = coefs, 
+              aes(intercept = `(Intercept)`, slope = hgt),  
+              color = "dodgerblue")
 ```
-
-
-
 
 ## Model Fit
 
 In this final chapter, you'll learn how to assess the "fit" of a simple linear regression model.
 
+Standard error of residuals
+
+One way to assess strength of fit is to consider how far off the model is for a typical case. That is, for some observations, the fitted value will be very close to the actual value, while for others it will not. The magnitude of a typical residual can give us a sense of generally how close our estimates are.
+
+However, recall that some of the residuals are positive, while others are negative. In fact, it is guaranteed by the least squares fitting procedure that the mean of the residuals is zero. Thus, it makes more sense to compute the square root of the mean squared residual, or root mean squared error (RMSERMSE). R calls this quantity the residual standard error.
+
+To make this estimate unbiased, you have to divide the sum of the squared residuals by the degrees of freedom in the model. Thus,
+
+RMSE=∑ie2id.f.−−−−−√=SSEd.f.−−−−−√
+RMSE=∑iei2d.f.=SSEd.f.
+You can recover the residuals from mod with residuals(), and the degrees of freedom with df.residual().
+
+INSTRUCTIONS
+
+View a summary() of mod.
+Compute the mean of the residuals() and verify that it is approximately zero.
+Use residuals() and df.residual() to compute the root mean squared error (RMSE), a.k.a. residual standard error.
+
 ```{r}
+# View summary of model
+summary(mod)
+
+# Compute the mean of the residuals
+mean(residuals(mod))
+
+# Compute RMSE
+sqrt(sum(residuals(mod)^2) / df.residual(mod))
+```
+
+Assessing simple linear model fit
+
+Recall that the coefficient of determination (R2R2), can be computed as
+R2=1−SSESST=1−Var(e)Var(y),
+R2=1−SSESST=1−Var(e)Var(y),
+where ee is the vector of residuals and yy is the response variable. This gives us the interpretation of R2R2 as the percentage of the variability in the response that is explained by the model, since the residuals are the part of that variability that remains unexplained by the model.
+
+### INSTRUCTIONS
+
+The bdims_tidy data frame is the result of augment()-ing the bdims data frame with the mod for wgt as a function of hgt.
+
+Use the summary() function to view the full results of mod.
+Use the bdims_tidy data frame to compute the R2R2 of mod manually using the formula above, by computing the ratio of the variance of the residuals to the variance of the response variable.
+
+```{r}
+# View model summary
+summary(mod)
+
+# Compute R-squared
+bdims_tidy %>%
+  summarize(var_y =var(wgt) , var_e =var(.resid) ) %>%
+  mutate(R_squared = 1-var_e/var_y)
+
+
 
 ```
+
+
 
