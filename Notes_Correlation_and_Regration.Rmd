@@ -20,12 +20,13 @@ Ultimately, data analysis is about understanding relationships among variables. 
 # install.packages("ggplot2")
 # install.packages("dplyr")
 #install.packages("mosaicData")
+#install.packages("broom")
 
 library("openintro")
 library("ggplot2")
 library("dplyr")
 library("tidyr")
-
+library("broom")
 ```
 
 
@@ -548,6 +549,60 @@ mean(fitted.values(mod)) == mean(bdims$wgt)
 # Mean of the residuals
 mean(residuals(mod))
 ```
+
+### Tidying your linear model
+
+As you fit a regression model, there are some quantities (e.g. R2R2) that apply to the model as a whole, while others apply to each observation (e.g. y^iy^i). If there are several of these per-observation quantities, it is sometimes convenient to attach them to the original data as new variables.
+
+The augment() function from the broom package does exactly this. It takes a model object as an argument and returns a data frame that contains the data on which the model was fit, along with several quantities specific to the regression model, including the fitted values, residuals, leverage scores, and standardized residuals.
+
+### INSTRUCTIONS
+
+The same linear model from the last exercise, mod, is available in your workspace.
+
+Load the broom package.
+Create a new data frame called bdims_tidy that is the augmentation of the mod linear model.
+View the bdims_tidy data frame using glimpse().
+
+```{r}
+# Load broom
+library("broom")
+
+# Create bdims_tidy
+bdims_tidy <- augment(mod)
+
+# Glimpse the resulting data frame
+glimpse(bdims_tidy)
+```
+
+### Making predictions
+
+The fitted.values() function or the augment()-ed data frame provides us with the fitted values for the observations that were in the original data. However, once we have fit the model, we may want to compute expected values for observations that were not present in the data on which the model was fit. These types of predictions are called out-of-sample.
+
+The ben data frame contains a height and weight observation for one person. The mod object contains the fitted model for weight as a function of height for the observations in the bdims dataset. We can use the predict() function to generate expected values for the weight of new individuals. We must pass the data frame of new observations through the newdata argument.
+
+### INSTRUCTIONS
+
+The same linear model, mod, is defined in your workspace.
+
+Print ben to the console.
+Use predict() with the newdata argument to compute the expected height of the individual in the ben data frame.
+
+```{r}
+
+ben <- data.frame(wgt = 74.8, hgt = 182.8)
+
+# Print ben
+ben
+
+# Predict the weight of ben
+predict(mod, newdata = ben)
+```
+
+```{r}
+
+```
+
 
 
 
