@@ -74,8 +74,8 @@ Package: dplyr
 Source: CRAN
 Version: 0.7.4
 Hash: e1c300a22e22086568531c9d0c93bafc
-Requires: BH, R6, Rcpp, assertthat, bindrcpp, glue, magrittr,
-    pkgconfig, plogr, rlang, tibble
+Requires: BH, R6, Rcpp, assertthat, glue, magrittr, pkgconfig, plogr,
+    rlang, bindrcpp, tibble
 
 Package: evaluate
 Source: CRAN
@@ -87,8 +87,8 @@ Package: ggplot2
 Source: CRAN
 Version: 2.2.1
 Hash: 46e5cb78836848aa44655e577433f54b
-Requires: MASS, digest, gtable, lazyeval, plyr, reshape2, scales,
-    tibble
+Requires: MASS, digest, gtable, lazyeval, plyr, tibble, scales,
+    reshape2
 
 Package: glue
 Source: CRAN
@@ -120,7 +120,7 @@ Package: knitr
 Source: CRAN
 Version: 1.17
 Hash: f6b2bf543ee3e25f5b92bb46f9958c5f
-Requires: digest, evaluate, highr, markdown, stringr, yaml
+Requires: digest, highr, yaml, markdown, stringr, evaluate
 
 Package: labeling
 Source: CRAN
@@ -184,6 +184,12 @@ Version: 1.8.4
 Hash: 39dd3286b865c7b725d74c9a4c1b7931
 Requires: Rcpp
 
+Package: purrr
+Source: CRAN
+Version: 0.2.4
+Hash: a80b244ccd3fdb33a0ff2be3c50dd648
+Requires: magrittr, rlang, tibble
+
 Package: reshape2
 Source: CRAN
 Version: 1.4.2
@@ -199,8 +205,8 @@ Package: rmarkdown
 Source: CRAN
 Version: 1.8
 Hash: 2a7842e3cee62a79dd737d17e9e9d86b
-Requires: base64enc, evaluate, htmltools, jsonlite, knitr, mime,
-    rprojroot, stringr, yaml
+Requires: base64enc, jsonlite, mime, yaml, rprojroot, htmltools,
+    stringr, evaluate, knitr
 
 Package: rprojroot
 Source: CRAN
@@ -212,8 +218,8 @@ Package: scales
 Source: CRAN
 Version: 0.5.0
 Hash: 77d3b989d0995d27c9b2fa7da4093f34
-Requires: R6, RColorBrewer, Rcpp, dichromat, labeling, munsell, plyr,
-    viridisLite
+Requires: R6, RColorBrewer, Rcpp, dichromat, labeling, viridisLite,
+    plyr, munsell
 
 Package: stringi
 Source: CRAN
@@ -231,6 +237,19 @@ Source: CRAN
 Version: 1.3.4
 Hash: 2a67e8388d452614b66121fefa1e39b7
 Requires: Rcpp, rlang
+
+Package: tidyr
+Source: CRAN
+Version: 0.7.2
+Hash: fcc26b5be4f8c300b3a02300de6131bf
+Requires: Rcpp, glue, magrittr, rlang, stringi, tibble, dplyr, purrr,
+    tidyselect
+
+Package: tidyselect
+Source: CRAN
+Version: 0.2.3
+Hash: f734832478bdc63b43457f9a0bc5a056
+Requires: Rcpp, glue, rlang, purrr
 
 Package: viridisLite
 Source: CRAN
